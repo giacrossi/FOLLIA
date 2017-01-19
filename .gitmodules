@@ -1,0 +1,8 @@
+[submodule "src/third_party/FLAP"]
+	path = src/third_party/FLAP
+	url = https://github.com/szaghi/FLAP.git
+  branch = master
+[submodule "src/third_party/PENF"]
+	path = src/third_party/PENF
+	url = https://github.com/szaghi/PENF.git
+  branch = master
