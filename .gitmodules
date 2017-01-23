@@ -6,3 +6,6 @@
 	path = src/third_party/PENF
 	url = https://github.com/szaghi/PENF.git
   branch = master
+[submodule "pyplot-fortran"]
+	path = pyplot-fortran
+	url = https://github.com/jacobwilliams/pyplot-fortran.git
