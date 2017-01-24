@@ -82,5 +82,3 @@ Anyone is interest to use, to develop or to contribute to FOLLIA is welcome, fee
 FOLLIA uses some external libraries (placed into the *external* subdirectory of the root project) for the testing suite. These library maybe distributed under different licensing system with respect the FOLLIA one, please refer to their own licenses.
 
 Go to [Top](#top)
-
-Go to [Top](#top)
