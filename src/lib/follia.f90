@@ -3,6 +3,8 @@ module follia
 
 use penf, only : I_P, R_P
 
+public :: lagrange_interpolator
+
 type :: lagrange_interpolator
   !< Object providing the Lagrange Interpolator.
   integer(I_P)           :: S         !< Stencil number and dimension(s).

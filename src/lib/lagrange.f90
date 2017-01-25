@@ -58,9 +58,9 @@ contains
                     authors     = 'Fortran-FOSS-Programmers',                                       &
                     license     = 'GNU GPLv3',                                                      &
                     description = 'Evaluate coefficients and value(s) of a Lagrange interpolation', &
-                    examples    = ["lagrange_interpolation -i"           ,                          &
-                                   "lagrange_interpolation -i  -c  -int r    ",                     &
-                                   "lagrange_interpolation -i  -p -r   "])
+                    examples    = ["lagrange_interpolation -i            ",                         &
+                                   "lagrange_interpolation -i  -c  -int r",                         &
+                                   "lagrange_interpolation -i  -p -r     "])
       call cli%add(switch='--interpolate', switch_ab='-i', help='Perform interpolation', required=.false., &
                    def='.false.', act='store_true')
       call cli%add(switch='--interface', switch_ab='-int', help='Interface chosen', required=.false., &
