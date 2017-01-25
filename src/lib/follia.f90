@@ -67,7 +67,7 @@ contains
   real(R_P)                                   :: prod    !< Temporary variable.
   integer(I_P)                                :: i, j ,k !< Counters.
 
-  associate(S=>self%S,x=>self%x,coef=>self%coef)
+  associate(S=>self%S,x=>self%x,coef=>self%coef,x_tar=>self%x_target)
     do k=1,S  !stencils loop
       do j=1,S  !values loop
         prod = 1._R_P
