@@ -74,7 +74,7 @@ contains
       do j=1,S  !values loop
         prod = 1._R_P
         do i=0,S-1
-          if (i==j) cycle
+          if (-S+k+j-1==-S+k+i) cycle
           prod = prod * ((x_tar - x(-S+k+i)) / (x(-S+k+j-1) - x(-S+k+i)))
         enddo
         coef(j,k) = prod
