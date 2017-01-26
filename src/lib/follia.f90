@@ -58,7 +58,7 @@ contains
 
   associate(S=>self%S,x=>self%x)
     do i=1,2*S-1  !< Whole interpolation domain loop
-      x(i) = -S + i
+      x(-S+i) = -S + i
     enddo
   endassociate
   endsubroutine init_uniform_grid
