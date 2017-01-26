@@ -34,12 +34,13 @@ endtype interpolate
 contains
 
   !< Public methods
-  subroutine execute(self)
+  subroutine execute(self, interpolator)
   !< Execute the interpolation.
-  class(interpolate), intent(inout) :: self !< Lagrange interpolator.
+  class(interpolate),           intent(inout) :: self !< Lagrange interpolator.
+  class(lagrange_interpolator), intent(inout) :: interpolator
 
   call self%initialize
-  call self%perform
+  call self%perform(interpolator)
   endsubroutine execute
 
   !< Private methods
@@ -86,11 +87,11 @@ contains
     endsubroutine parse_cli
   endsubroutine initialize
 
-  subroutine save_results(self)
+  subroutine save_results(self, interpolator)
   !< Save Lagrange interpolation results.
 
-  class(interpolate), intent(inout)   :: self
-  class(lagrange_interpolator)        :: interpolator
+  class(interpolate),           intent(inout) :: self
+  class(lagrange_interpolator), intent(in)    :: interpolator
   character(len=:), allocatable       :: buffer       !< Buffer string.
   integer(I_P)                        :: file_unit
   integer(I_P)                        :: i, j         !< Counters.
@@ -99,7 +100,7 @@ contains
     open(newunit=file_unit, file='interpolations.dat')
     write(file_unit, "(A)") 'Interpolation results'
     do i=1,interpolator%S
-      write(file_unit, ("(A, FR_I, A, FR_P)") 'interpolation(', i, ')= ', interpolator%interp(i)
+      write(file_unit, "(A, FR_I, A, FR_P)") 'interpolation(', i, ')= ', interpolator%interp(i)
     enddo
     close(unit=file_unit)
   endif
@@ -115,10 +116,10 @@ contains
   endif
   endsubroutine save_results
 
-  subroutine perform(self)
+  subroutine perform(self, interpolator)
   !< Perform the test.
-  class(interpolate), intent(inout)         :: self          !< Lagrange interpolator.
-  class(lagrange_interpolator)              :: interpolator
+  class(interpolate),           intent(inout) :: self          !< Lagrange interpolator.
+  class(lagrange_interpolator), intent(inout) :: interpolator
 
   call interpolator%allocate_interpolator(self%S_number)
   select case(self%interf)
@@ -133,7 +134,7 @@ contains
   if (self%inter) then
     call interpolator%compute_interpolations
   endif
-  call self%save_results
+  call self%save_results(interpolator)
   endsubroutine perform
 endmodule interpolation
 
