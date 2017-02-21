@@ -70,18 +70,15 @@ endinterface
 
 type(lagrange_interpolator) :: interp
 integer(I_P), allocatable   :: den(:,:)
-integer(I_P)                :: i, j
+integer(I_P)                :: i, j, S
 integer(I_P)                :: file_unit
 logical                     :: symp
 integer(I_P), allocatable   :: int_coef(:,:)
 
 print *, 'Insert stencil dimension and number'
-read *, interp%S
+read *, S
 
-call interp%allocate_interpolator(interp%S)
-call interp%init_uniform_grid
-
-interp%x_target = -0.5_R_P
+call interp%initialize_interpolator(S,-0.5_R_P)
 
 call interp%compute_coefficients
 call interp%compute_interpolations
@@ -115,10 +112,7 @@ do j=1,interp%S
   enddo
 enddo
 
-call interp%allocate_interpolator(interp%S)
-call interp%init_uniform_grid
-
-interp%x_target =  0.5_R_P
+call interp%initialize_interpolator(S,0.5_R_P)
 
 call interp%compute_coefficients
 call interp%compute_interpolations

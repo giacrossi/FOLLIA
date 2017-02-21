@@ -16,7 +16,7 @@ type :: lagrange_interpolator
   contains
     procedure, pass(self) :: allocate_interpolator     !< Allocate the interpolator object.
     procedure, pass(self) :: deallocate_interpolator   !< Deallocate the interpolator object.
-    procedure, pass(self) :: init_uniform_grid         !< Initialize a uniform grid.
+    procedure, pass(self) :: initialize_interpolator   !< Initialize the interpolator.
     procedure, pass(self) :: compute_coefficients      !< Compute the interpolation coefficients.
     procedure, pass(self) :: compute_interpolations    !< Compute the interpolation.
 endtype lagrange_interpolator
@@ -51,17 +51,38 @@ contains
   if (allocated(self%interp)) deallocate(self%interp)
   endsubroutine deallocate_interpolator
 
-  subroutine init_uniform_grid(self)
-  !< Initialize a uniform grid for interpolation stencils.
-  class(lagrange_interpolator), intent(inout) :: self   !< Lagrange interpolator.
-  integer(I_P)                                :: i      !< Counter.
+  subroutine initialize_interpolator(self, S, x_target, absc)
+  !< Initialize the interpolator
+  class(lagrange_interpolator), intent(inout) :: self      !< Lagrange interpolator.
+  integer(I_P)                , intent(in)    :: S      !< Stencil number and dimension(s).
+  real(R_P)                   , intent(in)    :: x_target  !< Abscissa where interpolation takes place.
+  real(R_P), optional         , intent(in)    :: absc(:)   !< Abscissas of the interpolation points[-S+1:S-1].
+  real(R_P)                                   :: ubound_x  !< Upper bound for x_target [(x(0)+x(+1))/2].
+  real(R_P)                                   :: lbound_x  !< Lower bound for x_target [(x(0)+x(-1))/2].
+  integer(I_P)                                :: i         !< Counter.
 
-  associate(S=>self%S,x=>self%x)
-    do i=1,2*S-1  !< Whole interpolation domain loop
-      x(-S+i) = -S + i
-    enddo
+  call self%allocate_interpolator(S)
+  associate(x=>self%x,x_tar=>self%x_target)
+    if (present(absc)) then
+      x = absc
+    else
+      do i=1,2*S-1  !< Whole interpolation domain loop
+        x(-S+i) = -S + i
+      enddo
+    endif
+    ubound_x = (x(0) + x( 1)) / 2._R_P
+    lbound_x = (x(0) + x(-1)) / 2._R_P
+    if (x_target>ubound_x) then
+      error stop 'The abscissa of the target point is bigger than the upper bound of the cell'
+    elseif (x_target<lbound_x) then
+      error stop 'The abscissa of the target point is lower than the upper bound of the cell'
+    elseif (x_target==x(0)) then
+      error stop 'The abscissa of the target point corresponds to the center of the cell'
+    else
+      x_tar = x_target
+    endif
   endassociate
-  endsubroutine init_uniform_grid
+  endsubroutine initialize_interpolator
 
   subroutine compute_coefficients(self)
   !< Compute the coefficients of the Lagrange polynomial(s).
