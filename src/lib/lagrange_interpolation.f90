@@ -56,7 +56,11 @@ program lagrange_interpolation
 !< Program for computing Lagrange coefficients and interpolation(s).
 
 use follia
-use PENF, only : I_P, R_P, str
+#ifdef r16p
+use penf, only: I_P, str, RPP=>R16P
+#else
+use penf, only: I_P, str, RPP=>R8P
+#endif
 
 implicit none
 
@@ -78,12 +82,12 @@ integer(I_P), allocatable   :: int_coef(:,:)
 print *, 'Insert stencil dimension and number'
 read *, S
 
-call interp%initialize_interpolator(S,-0.5_R_P)
+call interp%initialize_interpolator(S,-0.5_RPP)
 
 call interp%compute_coefficients
 call interp%compute_interpolations
 
-interp%coef(:,:) = interp%coef(:,:) * (2._R_P**20_R_P)
+interp%coef(:,:) = interp%coef(:,:) * (2._RPP**20_RPP)
 
 allocate(int_coef(1:interp%S,1:interp%S))
 allocate(den(1:interp%S,1:interp%S))
@@ -112,12 +116,12 @@ do j=1,interp%S
   enddo
 enddo
 
-call interp%initialize_interpolator(S,0.5_R_P)
+call interp%initialize_interpolator(S,0.5_RPP)
 
 call interp%compute_coefficients
 call interp%compute_interpolations
 
-interp%coef(:,:) = interp%coef(:,:) * (2._R_P**20_R_P)
+interp%coef(:,:) = interp%coef(:,:) * (2._RPP**20_RPP)
 
 int_coef=nint(interp%coef)
 
