@@ -117,9 +117,9 @@ contains
 
   subroutine compute_interpolations(self)
   !< Compute the Lagrange interpolation(s).
-  class(lagrange_interpolator), intent(inout) :: self    !< Lagrange interpolator.
-  real(RPP)                                   :: inter   !< Temporary variable.
-  integer(I_P)                                :: i, j ,k !< Counters.
+  class(lagrange_interpolator), intent(inout) :: self   !< Lagrange interpolator.
+  real(RPP)                                   :: inter  !< Temporary variable.
+  integer(I_P)                                :: i, j   !< Counters.
 
   associate(S=>self%S,y=>self%y,coef=>self%coef,interp=>self%interp)
     do j=1,S  !stencils loop
