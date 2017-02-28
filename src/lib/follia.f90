@@ -103,13 +103,6 @@ contains
           prod = prod * ((x_tar - x(-S+k+i)) / (x(-S+k+j-1) - x(-S+k+i)))
         enddo
         coef(j,k) = prod
-        if (prod==0._RPP) then
-          print *, i, j
-          do i=0,S-1
-            if (-S+k+j-1==-S+k+i) cycle
-            print *, x(-S+k+i), x(-S+k+j-1)
-          enddo
-        endif
       enddo
     enddo
   endassociate
