@@ -87,7 +87,7 @@ call interp%initialize_interpolator(S,-0.5_RPP)
 call interp%compute_coefficients
 call interp%compute_interpolations
 
-interp%coef(:,:) = interp%coef(:,:) * (2._RPP**20_RPP)
+interp%coef(:,:) = interp%coef(:,:) * (2._RPP**20._RPP)
 
 allocate(int_coef(1:interp%S,1:interp%S))
 allocate(den(1:interp%S,1:interp%S))
@@ -121,7 +121,7 @@ call interp%initialize_interpolator(S,0.5_RPP)
 call interp%compute_coefficients
 call interp%compute_interpolations
 
-interp%coef(:,:) = interp%coef(:,:) * (2._RPP**20_RPP)
+interp%coef(:,:) = interp%coef(:,:) * (2._RPP**20._RPP)
 
 int_coef=nint(interp%coef)
 
